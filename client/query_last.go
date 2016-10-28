@@ -27,6 +27,7 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+	"time"
 )
 
 // QueryLastParam is the structure used to hold
@@ -120,7 +121,7 @@ type QueryRespLastItem struct {
 	Tags map[string]string `json:"tags"`
 
 	// A Unix epoch timestamp, in milliseconds, when the data point was written.
-	Timestamp int64 `json:"timestamp"`
+	Timestamp time.Time `json:"timestamp"`
 
 	// The value of the data point enclosed in quotation marks as a string
 	Value string `json:"value"`

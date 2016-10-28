@@ -28,6 +28,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // QueryParam is the structure used to hold
@@ -232,7 +233,8 @@ func (qri *QueryRespItem) GetDataPoints() []*DataPoint {
 	datapoints := make([]*DataPoint, 0)
 	timestampStrs := qri.getSortedTimestampStrs()
 	for _, timestampStr := range timestampStrs {
-		timestamp, _ := strconv.ParseInt(timestampStr, 10, 64)
+		timestampInt, _ := strconv.ParseInt(timestampStr, 10, 64)
+		timestamp := time.Unix(timestampInt, 0)
 		datapoint := &DataPoint{
 			Metric:    qri.Metric,
 			Value:     qri.Dps[timestampStr],
@@ -262,7 +264,8 @@ func (qri *QueryRespItem) GetLatestDataPoint() *DataPoint {
 	if size == 0 {
 		return nil
 	}
-	timestamp, _ := strconv.ParseInt(timestampStrs[size-1], 10, 64)
+	timestampInt, _ := strconv.ParseInt(timestampStrs[size-1], 10, 64)
+	timestamp := time.Unix(timestampInt, 0)
 	datapoint := &DataPoint{
 		Metric:    qri.Metric,
 		Value:     qri.Dps[timestampStrs[size-1]],
