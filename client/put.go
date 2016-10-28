@@ -26,6 +26,7 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+	"time"
 )
 
 // DataPoint is the structure used to hold
@@ -41,7 +42,7 @@ type DataPoint struct {
 	// The timestamp must not contain non-numeric characters.
 	// One can use time.Now().Unix() to set this attribute.
 	// This attribute is also required with non-zero value.
-	Timestamp int64 `json:"timestamp"`
+	Timestamp time.Time `json:"timestamp"`
 
 	// The real type of Value only could be int, int64, float64, or string, and is required.
 	Value interface{} `json:"value"`
@@ -249,7 +250,7 @@ func validateDataPoint(datas []DataPoint) error {
 }
 
 func isValidDataPoint(data *DataPoint) bool {
-	if data.Metric == "" || data.Timestamp == 0 || len(data.Tags) < 1 || data.Value == nil {
+	if data.Metric == "" || len(data.Tags) < 1 || data.Value == nil {
 		return false
 	}
 	switch data.Value.(type) {
