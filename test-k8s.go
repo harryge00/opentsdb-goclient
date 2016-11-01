@@ -51,7 +51,7 @@ func main() {
 		Start: st1,
 		End:   st2,
 	}
-	name := []string{"container__memory__rss"}
+	name := []string{"container__memory__rss", "container__network__receive__errors__total", "container__network__receive__bytes__total"}
 	tags := map[string]string{
 		"kubernetes_io_hostname": "kube-node-1",
 	}
@@ -69,7 +69,9 @@ func main() {
 	if queryResp, err := tsdbClient.Query(queryParam); err != nil {
 		fmt.Printf("Error occurs when querying: %v", err)
 	} else {
-		fmt.Printf("%s", queryResp.String())
+		for _, item := range queryResp.QueryRespCnts {
+			fmt.Printf("%s:\n%v\n", item.Metric, item)
+		}
 	}
 	fmt.Println("Finish testing POST /api/query.")
 
