@@ -246,6 +246,24 @@ func (qri *QueryRespItem) GetDataPoints() []*DataPoint {
 	return datapoints
 }
 
+// GetTimeAndFloat64Values returns the real ascending datapoints from the information of the related QueryRespItem.
+func (qri *QueryRespItem) GetTimeAndFloat64Values() ([]time.Time, []float64) {
+	timestampStrs := qri.getSortedTimestampStrs()
+	values := make([]float64, len(timestampStrs))
+	timeStamps := make([]time.Time, len(timestampStrs))
+	for i, timestampStr := range timestampStrs {
+		timestampInt, err := strconv.ParseInt(timestampStr, 10, 64)
+		if err != nil {
+			continue
+		}
+		timeStamps[i] = time.Unix(timestampInt, 0)
+		if val, ok := qri.Dps[timestampStr].(float64); ok {
+			values[i] = val
+		}
+	}
+	return timeStamps, values
+}
+
 // getSortedTimestampStrs returns a slice of the ascending timestamp with
 // string format for the Dps of the related QueryRespItem instance.
 func (qri *QueryRespItem) getSortedTimestampStrs() []string {
