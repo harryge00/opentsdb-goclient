@@ -1,4 +1,8 @@
-##opentsdb-goclient
+##Caicloud fork of opentsdb-goclient
+
+### ChangeLog
+* time type from int64 to time.Time
+* Add a method: GetTimeAndFloat64Values
 
 ###Backgroud
 OpenTSDB is a distributed, scalable Time Series Database (TSDB) written on top of HBase.
