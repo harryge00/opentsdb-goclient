@@ -59,7 +59,7 @@ func main() {
 		time.Sleep(500 * time.Millisecond)
 		data := client.DataPoint{
 			Metric:    name[i],
-			Timestamp: time.Now().Unix(),
+			Timestamp: time.Now(),
 			Value:     rand.Float64(),
 		}
 		data.Tags = tags
